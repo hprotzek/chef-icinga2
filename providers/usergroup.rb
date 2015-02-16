@@ -38,19 +38,19 @@ def object_resources
   end
 end
 
-# create object resource
+# collect objects and create resource template
 def object_template
-
+  # collect objects
   icinga2_objects = {}
   object_resources.reduce({}) do |_hash, resource|
     next if resource.action != :create || icinga2_objects.key?(resource.name)
     icinga2_objects[resource.name] = {}
     icinga2_objects[resource.name] = { 'display_name' => resource.send('display_name'),
                                        'zone' => resource.send('zone'),
-                                       'groups' => resource.send('groups')
-    }
+                                       'groups' => resource.send('groups') }
   end
 
+  # create object resource
   ot = template ::File.join(node['icinga2']['objects_dir'], "#{::File.basename(__FILE__, '.rb')}.conf") do
     source "object.#{::File.basename(__FILE__, '.rb')}.conf.erb"
     cookbook 'icinga2'

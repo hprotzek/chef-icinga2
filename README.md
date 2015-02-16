@@ -23,9 +23,29 @@ https://supermarket.chef.io/cookbooks/icinga2
 For issue reporting or any discussion regarding this cookbook, open an issue at [Dev Icinga]. New users need to [Register] first.
 
 
+## Contributing
+
+1. Open Bug / Feature issue at [Dev Icinga]
+2. Fork the repository on Github
+3. Create a named feature branch (like `add_component_x`)
+4. Write your change
+5. Write tests for your change (if applicable)
+6. Run the tests (`rake`), ensuring they all pass
+7. Write new resource/attribute description to `README.md`
+8. Write description about changes to PR along with [Dev Icinga] issue #
+9. Submit a Pull Request using Github
+
+
 ## Major Changes
 
-###v0.10.x
+###v2.0.1
+
+* icinga web2 uri updated to `/icingaweb2`
+
+* epel repository is by default enabled for rhel platform family except amazon platform
+
+
+###v0.10.1
 
 * Deprecated node *features* attribute and recipe `icinga2::server_features` in favour of LWRP `feature`
 
@@ -980,6 +1000,7 @@ Above LWRP resource will create an icinga `Zone` object.
 - *action* (optional)	- default :enable, options: :enable, :disable
 - *endpoints* (optional, String)	- icinga `Zone` attribute `endpoints`
 - *parent* (optional, String)	- icinga `Zone` attribute `parent`
+- *global* (optional, TrueClass/FalseClass)	- icinga `Zone` attribute `global`
 
 
 ## LWRP icinga2_endpoint
@@ -1729,7 +1750,11 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Advanced Attributes
 
-* `default['icinga2']['disable_conf_d']` (default: `false`): disable icinga2 `conf.d` default configuration and use LWRP to manage icinga2 objects / templates
+* `default['icinga2']['disable_conf_d']` (default: `false`): disable icinga2 `conf.d` default configuration directory in `icinga2.conf` and use LWRP to manage icinga2 objects / templates
+
+* `default['icinga2']['disable_repository_d']` (default: `false`): disable icinga2 `repository.d` directory in `icinga2.conf`
+
+* `default['icinga2']['include_itl']` (default: `itl, plugins`): `icinga2.conf` include `itl` array attribute
 
 * `default['icinga2']['add_cloud_custom_vars']` (default: `true`): add cloud node attributes, limited cloud provider support is available
 
@@ -1895,7 +1920,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
  * `default[:icinga2][:web2][:web_root]` (default: `/usr/share/icingaweb2`): icingaweb2 web root location
 
- * `default[:icinga2][:web2][:web_uri]` (default: `/icingaweb`): icingweb2 web uri
+ * `default[:icinga2][:web2][:web_uri]` (default: `/icingaweb2`): icingweb2 web uri
 
  * `default[:icinga2][:web2][:conf_dir]` (default: `/etc/icingaweb2`): icingaweb2 config directory
 
@@ -2111,18 +2136,6 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 * `default['icinga2']['classic_ui']['cgi']['log_archive_path']` (default: `node['icinga2']['log_dir']/compat/archives`)
 
 * `default['icinga2']['classic_ui']['cgi']['date_format']` (default: `us`)
-
-
-## Contributing
-
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests (`rake`), ensuring they all pass
-6. Write new resource/attribute description to `README.md`
-7. Write description about changes to PR
-8. Submit a Pull Request using Github
 
 
 ## Copyright & License

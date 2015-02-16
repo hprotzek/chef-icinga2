@@ -1,6 +1,6 @@
 # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/getting-started#getting-started
 
-default['icinga2']['version'] = '2.2.3-1'
+default['icinga2']['version'] = '2.2.4-1'
 default['icinga2']['cookbook'] = 'icinga2'
 default['icinga2']['conf_dir'] = '/etc/icinga2'
 default['icinga2']['conf_d_dir'] = ::File.join(node['icinga2']['conf_dir'], 'conf.d')
@@ -12,7 +12,14 @@ default['icinga2']['pnp'] = false
 
 # avoid conflicts
 default['icinga2']['disable_conf_d'] = false
+default['icinga2']['disable_repository_d'] = false
 default['icinga2']['add_cloud_custom_vars'] = true
+
+# itl defaults
+default['icinga2']['include_itl'] = %w(itl plugins)
+
+# includes yum-epel cookbook to setup yum epel repository
+default['icinga2']['setup_epel'] = true
 
 # object conf file location
 default['icinga2']['objects_d'] = 'objects.d'
